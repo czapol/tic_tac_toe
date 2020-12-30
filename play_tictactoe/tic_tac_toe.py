@@ -1,4 +1,4 @@
-class Game:
+class TTT:
     
     def __init__(self):
         self.player1=input("What is player one's name?\n")
@@ -20,18 +20,21 @@ class Game:
         none
         
         """
-        self.moves = {'A':'A','B':'B','C':'C',
-                     'D':'D','E':'E','F':'F',
-                     'G':'G','H':'H','I':'I'
+        self.moves = {
+            'A':'A','B':'B','C':'C',
+            'D':'D','E':'E','F':'F',
+            'G':'G','H':'H','I':'I'
                      }
-        self.player_moves={self.player1:set(),self.player2:set()}
+        self.player_moves={
+            self.player1:set(),
+            self.player2:set()
+        }
         self.stop = False 
-        self.switch = True
+        self.switch = True #player switcher
         self.round = 0
-        self.winner = None
+        self.winner = None 
         
        
-        
         while not self.stop:
             self.print_board()
             if self.switch==True:
@@ -57,8 +60,22 @@ class Game:
             
         self.game_counter +=1
         self.scores[self.game_counter]=self.winner 
-        self.player1, self.player2 = self.player2, self.player1        
+        
+        # switch players after each session
+        self.player1, self.player2 = self.player2, self.player1    
+        
     def ask_move(self,player):
+        
+        """
+        Asks the player to select a valid move 
+        
+        Args:
+        player (str) - the current player 
+        Returns: 
+        the move player took
+        
+        """
+        
         valid_move = False
         move = input(f'what is your next move {player}\n')
         
@@ -86,7 +103,7 @@ class Game:
     
     def print_board(self):
         """
-        prints the board 
+        prints the current board 
         
         Args:
         None
@@ -100,6 +117,16 @@ class Game:
         
     
     def check_status(self,player_moves):
+        
+        """
+        Start tic tac toe session
+        
+        Args:
+        player_moves (set) - all the moves player took in this session 
+        Returns: 
+        bool - if player won or not 
+        
+        """
         winning_combinations = [{'A','B','C'},{'A','E','I'},{'G','E','C'},{'D','E','F'},{'A','D','G'},{'B','E','H'},{'I','F','C'}]
         for combination in winning_combinations:
             if combination-player_moves == set():
