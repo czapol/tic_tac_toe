@@ -23,12 +23,62 @@ class Game:
                      'D':'D','E':'E','F':'F',
                      'G':'G','H':'H','I':'I'
                      }
-        self.player1moves=set()
-        self.player2moves=set()
+        self.player_moves={self.player1:set(),self.player:set()}
+        self.stop = False 
+        self.switch = True
+        self.round = 0
+      
+       
         
+        while not self.stop:
+            self.print_board
+            if self.switch=True:
+                player = self.player1
+            else:
+                player = self.player2
+            
+           move=self.ask_move(player)
+           self.player_moves[player].add(move)
+            
+           self.round +=1
+           if self.round >=5:
+                is_winner=self.check_status(self.player_moves[player])
+                if is_winner:
+                    self.stop=True
+                    print(f'{player} won')
+                    continue
+                
+                
+          
+            
+        self.game_counter +=1
+        self.scores[self.game_counter]=player
         
-    def ask_move(self):
-        pass
+    def ask_move(self,player):
+        valid_move = False
+        move = insert(f'what is your next move {player}')
+        
+        while not valid_move:
+            if move == 'stop':
+                self.stop = True
+                valid_move = True 
+                
+            elif move not in ('ABCDEFGHI'):
+                move=insert('This not a valid field, choose again')
+            elif self.moves[move]=='o' or self.moves[move]=='x':
+                move=insert('This field is taken, choose again')
+            else:
+                valid_move = True
+        if player == self.player1:
+            self.moves[move]='o'
+        else:
+            self.moves[move]='x'
+            
+        return move 
+                
+            
+  
+        
     
     def print_board(self):
         """
@@ -64,7 +114,7 @@ class Game:
         
         """
         for game,scores in self.scores.items():
-            print( f'game {games}, score: {scores}')
+            print( f'game {games}, winner: {scores}')
     
 
     
