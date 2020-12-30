@@ -1,7 +1,7 @@
 This is simple tic tac toe game for two players
 
 Install package using:
-$: pip install play_tictactoe
+$: pip install play-tictactoe
 
 
 Import the package in Python:
